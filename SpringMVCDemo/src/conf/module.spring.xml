@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+	<!-- 功能模块的XML -->
+ 
+	<!-- 
+		class 属性的内容对于基本的增删改 不用创建类
+	   	class="com.ecc.user.UserDao"
+	   	如果复杂的增删改继承重写
+	  -->
+	<bean id="UserDao" parent="BasicAction">
+		<property name="tableName">
+			<value>users</value>
+		</property>
+		<property name="pkValue">
+			<value>id</value>
+		</property>
+	</bean>
+	
+	<!-- 
+		class 属性的内容对于表字段和页面字段一致不用创建类，一般都会继承重写该类的构造方法
+		class="com.ecc.user.UserDataProvider"
+	   	如果复杂的查询在继承类重新编辑字段关系，复杂的返回页面和导出也在该类重写 
+	  -->
+	<bean id="UserDataProvider" parent="BaseDataProvider">
+		<property name="sqlBase">
+			<value>select * from users</value>
+		</property>
+	</bean>
+
+
+
+</beans>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+
+
+	<bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<!-- 分开编写 主要用于SESSION过滤 -->
+				<prop key="/login.do">LoginController</prop>
+				<prop key="/action.do">ActionController</prop>
+			</props>
+		</property>
+	</bean>
+	
+	<bean id="paraNameResolver"
+		class="org.springframework.web.servlet.mvc.multiaction.ParameterMethodNameResolver">
+		<property name="paramName" value="action" />
+		<property name="defaultMethodName" value="init" />
+	</bean>
+	
+	<bean id="LoginController" class="com.ecc.core.controller.LoginController"
+		scope="prototype">
+		<property name="methodNameResolver">
+			<ref bean="paraNameResolver" />
+		</property>
+	</bean>
+	
+	<bean id="ActionController" class="com.ecc.core.controller.ActionController"
+		scope="prototype">
+		<property name="methodNameResolver">
+			<ref bean="paraNameResolver" />
+		</property>
+	</bean>
+	
+</beans>
